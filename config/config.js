@@ -20,6 +20,10 @@ export default {
             { path: 'monitor', component: './Dashboard/Monitor' },
             { path: 'workplace', component: './Dashboard/Workplace' }
           ]
+        },
+        {
+          path: 'puzzlecards',
+          component: './puzzlecards'
         }
       ]
     }
@@ -27,7 +31,14 @@ export default {
   plugins: [
     ['umi-plugin-react', {
       // TODO
-      antd: true
+      antd: true,
+      dva: true
     }]
-  ]
+  ],
+  proxy: {
+    '/dev': {
+      target: 'https://08ad1pao69.execute-api.us-east-1.amazonaws.com',
+      changeOrigin: true,
+    }
+  }
 };
