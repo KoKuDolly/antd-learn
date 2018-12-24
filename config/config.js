@@ -24,7 +24,8 @@ export default {
         {
           path: 'puzzlecards',
           component: './puzzlecards'
-        }
+        },
+        { path: 'list', component: '../page/list/index' }
       ]
     }
   ],
