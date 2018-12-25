@@ -1,19 +1,23 @@
 // import React from 'react';
 import { Table, Modal, Button, Form, Input } from 'antd';
 import { connect } from 'dva';
+import SampleChart from '../../components/SampleChart';
 
 const FormItem = Form.Item;
 
 function mapStateToProps(state) {
   return {
     cardsList: state.cards.cardsList,
-    cardsLoading: state.loading.effects['cards/queryList'],
+    cardsLoading: state.loading.effects['cards/queryList'], // 这句没懂loading没找到
+    statistic: state.cards.statistic,
   };
 }
 
 class List extends React.Component {
   state = {
     visible: false,
+    id: null,
+    statisticVisible: false
   };
 
   columns = [
@@ -30,7 +34,29 @@ class List extends React.Component {
       dataIndex: 'url',
       render: value => <a href={value}>{value}</a>
     },
+    {
+      title: '',
+      dataIndex: '_',
+      render: (_, { id }) => {
+        // console.log(id);
+        return (
+          <Button onClick={() => { this.showStatistic(id); }}>图表</Button>
+        );
+      }
+    }
   ];
+  showStatistic = (id) => {
+    this.props.dispatch({
+      type: 'cards/getStatistic',
+      payload: id
+    });
+    this.setState({ id, statisticVisible: true });
+  }
+  handleStatisticCancle = () => {
+    this.setState({
+      statisticVisible: false,
+    });
+  }
   showModal = () => {
     this.setState({
       visible: true,
@@ -50,11 +76,6 @@ class List extends React.Component {
           payload: values
         });
         this.setState({ visible: false });
-        // setTimeout(() => {
-        //   dispatch({
-        //     type: 'cards/queryList',
-        //   });
-        // }, 1000);
       }
     });
   };
@@ -64,8 +85,8 @@ class List extends React.Component {
     });
   };
   render() {
-    const { visible } = this.state;
-    const { cardsList, cardsLoading, form: { getFieldDecorator } } = this.props;
+    const { visible, statisticVisible, id } = this.state;
+    const { cardsList, cardsLoading, form: { getFieldDecorator }, statistic } = this.props;
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 14 },
@@ -102,6 +123,9 @@ class List extends React.Component {
                 )}
             </FormItem>
           </Form>
+        </Modal>
+        <Modal visible={statisticVisible} footer={null} onCancel={this.handleStatisticCancle}>
+          <SampleChart data={statistic[id]}/>
         </Modal>
       </div>
     );

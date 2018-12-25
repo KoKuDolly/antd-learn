@@ -5,11 +5,15 @@ export function queryList() {
 }
 
 export function addOne(data) {
-  return request('api/cards/add', {
+  return request('/api/cards/add', {
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'POST',
     body: JSON.stringify(data),
   });
+}
+
+export function getStatistic(id) {
+  return request(`/api/cards/${id}/statistic`);
 }

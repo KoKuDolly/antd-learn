@@ -16,12 +16,6 @@ export default {
       console.log(rsp);
       yield put({ type: 'saveList', payload: { cardsList: rsp.result } });
     },
-    *deleteOne({ payload }, { call, put }) {
-      const rsp = yield call(cardsService.deleteOne, payload);
-      console.log('deleteOne');
-      console.log(rsp);
-      return rsp;
-    },
     *addOne({ payload }, { call, put }) {
       const rsp = yield call(cardsService.addOne, payload);
       yield put({ type: 'queryList' });
