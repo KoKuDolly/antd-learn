@@ -1,29 +1,48 @@
-import React from 'React';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
+import { FormattedMessage, getLocale, setLocale } from 'umi/locale';
 
-
-export default () => {
-  const style = {
+export default class helloworld extends React.Component {
+  style = {
     width: '400px',
     margin: '30px',
     boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
     border: '1px solid #e8e8e8'
   };
-
-  return (
-    <Card 
-      style={style}
-      actions={[<a>操作一</a>,<a>操作二</a>]}
-    >
-      <Card.Meta
-        avatar={<img 
-          alt=""
-          style={{ width: '64px', height: '64px', borderRadius: '32px' }}
-          src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
-        />}
-        title="Alipay"
-        description="在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。"
-      />
-    </Card>
-  );
+  changLang() {
+    const locale = getLocale();
+    if (!locale || locale === 'zh-CN') {
+      setLocale('en-US');
+    } else {
+      setLocale('zh-CN');
+    }
+  }
+  render() {
+    return (
+      <div>
+        <Card 
+          style={this.style}
+          actions={[<a>操作一</a>,<a>操作二</a>]}
+        >
+          <Card.Meta
+            avatar={<img 
+              alt=""
+              style={{ width: '64px', height: '64px', borderRadius: '32px' }}
+              src="https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png"
+            />}
+            title="Alipay"
+            description="在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。"
+          />
+        </Card>
+        <FormattedMessage id="helloworld"></FormattedMessage>
+        <Button
+          size="small"
+          onClick={() => {
+            this.changLang();
+          }}
+        >
+          <FormattedMessage id="lang" />
+        </Button>
+      </div>
+    );
+  }
 }

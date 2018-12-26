@@ -25,7 +25,8 @@ export default {
           path: 'puzzlecards',
           component: './puzzlecards'
         },
-        { path: 'list', component: '../page/list/index' }
+        { path: 'list', component: '../page/list/index' },
+        { path: 'locale', component: '../page/locale'}
       ]
     }
   ],
@@ -33,7 +34,10 @@ export default {
     ['umi-plugin-react', {
       // TODO
       antd: true,
-      dva: true
+      dva: true,
+      locale: {
+        enable: true,
+      }
     }]
   ],
   proxy: {
